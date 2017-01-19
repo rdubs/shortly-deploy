@@ -3,6 +3,18 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      options: { 
+        separator: ';',
+      },
+      clientjs: {
+        src: 'public/client/*.js',
+        dest: 'public/dist/client.js'
+      },
+      lib: {
+        src: 'public/lib/*.js',
+        dest: 'public/dist/lib.js'
+      }
+
     },
 
     mochaTest: {
@@ -21,40 +33,56 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      'my_target': {
+        files: {
+          'public/dist/output.min.js': ['public/dist/lib.js', 'public/dist/client.js']
+        }
+      }
     },
 
     eslint: {
-      target: [
-        // Add list of files to lint here
-      ]
+      // target: [
+      //   // Add list of files to lint here
+
+      // ]
+      target: './'
     },
 
-    cssmin: {
-    },
+    // cssmin: {
+    // },
 
     watch: {
       scripts: {
         files: [
-          'public/client/**/*.js',
-          'public/lib/**/*.js',
+          'public/client/*.js',
+          'public/lib/*.js',
         ],
         tasks: [
           'concat',
           'uglify'
         ]
-      },
-      css: {
-        files: 'public/*.css',
-        tasks: ['cssmin']
       }
+      // css: {
+      //   files: 'public/*.css',
+      //   tasks: ['cssmin']
+      // }
     },
 
     shell: {
       prodServer: {
       }
     },
+    gitpush: {
+      'your_target': {
+        options: {
+          remote: 'live',
+          branch: 'master'
+        }
+      }
+    }
   });
 
+  grunt.loadNpmTasks('grunt-git');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -76,8 +104,9 @@ module.exports = function(grunt) {
     'mochaTest'
   ]);
 
-  grunt.registerTask('build', [
-  ]);
+  grunt.registerTask('push', 'gitpush');
+
+  grunt.registerTask('build', ['concat', 'uglify', 'eslint', 'test']);
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
@@ -87,9 +116,9 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('deploy', [
+  grunt.registerTask('deploy', ['build']
     // add your deploy tasks here
-  ]);
+  );
 
 
 };
