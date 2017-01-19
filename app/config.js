@@ -19,7 +19,7 @@ db.urlsSchema = mongoose.Schema({
 });
 
 db.userSchema = mongoose.Schema({
-  id: Number,
+  index: { unique: true },
   username: String,
   password: String
   //timestamps?
