@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         dest: 'public/dist/client.js'
       },
       lib: {
-        src: 'public/lib/*.js',
+        src: ['public/lib/underscore.js', 'public/lib/jquery.js', 'public/lib/backbone.js', 'public/lib/handlebars.js'],
         dest: 'public/dist/lib.js'
       }
 
@@ -33,6 +33,9 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      options: {
+        mangle: false
+      },
       'my_target': {
         files: {
           'public/dist/output.min.js': ['public/dist/lib.js', 'public/dist/client.js']

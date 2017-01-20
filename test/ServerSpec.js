@@ -14,6 +14,7 @@ var Link = require('../app/models/link');
 describe('', function() {
 
   beforeEach(function(done) {
+    console.log('in before each');
     // Log out currently signed in user
     request(app)
       .get('/logout')

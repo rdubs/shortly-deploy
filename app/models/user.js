@@ -4,14 +4,20 @@ var Promise = require('bluebird');
 var mongoose = require('mongoose');
 
 
-// var Schema = mongoose.Schema
-db.userSchema.methods.comparePassword = function(attemptedPassword, callback) {
+userSchema = mongoose.Schema({
+  index: Number,
+  //index: { unique: true },
+  username: String,
+  password: String
+  //timestamps?
+});
+userSchema.methods.comparePassword = function(attemptedPassword, callback) {
   bcrypt.compare(attemptedPassword, this.get('password'), function(err, isMatch) {
     callback(isMatch);
   });
 };
 
-db.userSchema.pre('save', function(next) {
+userSchema.pre('save', function(next) {
   var user = this;
 
   // only hash the password if it has been modified (or is new)
@@ -29,7 +35,7 @@ db.userSchema.pre('save', function(next) {
   });
 });
 
-var User = mongoose.model('user', db.userSchema);
+var User = mongoose.model('User', userSchema);
 
 // var User = db.Model.extend({
 //   tableName: 'users',

@@ -8,30 +8,30 @@ db.once('open', function() {
   console.log('connected to mongoDB');
 });
 
-db.urlsSchema = mongoose.Schema({
-  id: Number,
-  url: String,
-  baseUrl: String,
-  code: String,
-  title: String,
-  visits: Number
-  //timestamps??
-});
+// db.urlsSchema = mongoose.Schema({
+//   index: { unique: true },
+//   url: String,
+//   baseUrl: String,
+//   code: String,
+//   title: String,
+//   visits: {type: Number, default: 0}
+//   //timestamps??
+// });
 
-db.userSchema = mongoose.Schema({
-  index: { unique: true },
-  username: String,
-  password: String
-  //timestamps?
-});
+// db.userSchema = mongoose.Schema({
+//   index: { unique: true },
+//   username: String,
+//   password: String
+//   //timestamps?
+// });
 
-var knex = require('knex')({
-  client: 'sqlite3',
-  connection: {
-    filename: path.join(__dirname, '../db/shortly.sqlite')
-  },
-  useNullAsDefault: true
-});
+// var knex = require('knex')({
+//   client: 'sqlite3',
+//   connection: {
+//     filename: path.join(__dirname, '../db/shortly.sqlite')
+//   },
+//   useNullAsDefault: true
+// });
 // var db = require('bookshelf')(knex);
 
 // db.knex.schema.hasTable('urls').then(function(exists) {
